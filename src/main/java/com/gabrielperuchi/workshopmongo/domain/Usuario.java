@@ -2,11 +2,17 @@ package com.gabrielperuchi.workshopmongo.domain;
 
 import java.io.Serializable;
 
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+
+@Document(collection = "usuario") // Referencia este obejto a uma coleção do mongoDB
 public class Usuario implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
+	@Id // Referencia quem será o id
 	private String id;
+	
 	private String nome;
 	private String email;
 
