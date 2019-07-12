@@ -34,14 +34,30 @@ public class UsuarioServico {
 		return repositorio.insert(obj);
 
 	}
-	
+
 	public void delete(String id) {
 		buscaPorId(id);
 		repositorio.deleteById(id);
 	}
-	
+
+	public Usuario update(Usuario usuario) {
+
+		Usuario novoUsuario = buscaPorId(usuario.getId());
+		updateData(novoUsuario, usuario);
+
+		return repositorio.save(novoUsuario);
+
+	}
+
+	private void updateData(Usuario novoUsuario, Usuario usuario) {
+
+		novoUsuario.setNome(usuario.getNome());
+		novoUsuario.setEmail(usuario.getEmail());
+
+	}
+
 	public Usuario fromDTO(UsuarioDTO objDTO) {
-		
+
 		return new Usuario(objDTO.getId(), objDTO.getNome(), objDTO.getEmail());
 	}
 }
