@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.gabrielperuchi.workshopmongo.domain.Usuario;
+import com.gabrielperuchi.workshopmongo.dto.UsuarioDTO;
 import com.gabrielperuchi.workshopmongo.repository.UsuarioRepositorio;
 import com.gabrielperuchi.workshopmongo.services.exception.ObjetoNaoEncontradoException;
 
@@ -20,11 +21,22 @@ public class UsuarioServico {
 
 		return repositorio.findAll();
 	}
-	
+
 	public Usuario buscaPorId(String id) {
-		
+
 		Optional<Usuario> usuario = repositorio.findById(id);
-		
+
 		return usuario.orElseThrow(() -> new ObjetoNaoEncontradoException("Objeto não encontrado"));
+	}
+
+	public Usuario inserir(Usuario obj) {
+
+		return repositorio.insert(obj);
+
+	}
+	
+	public Usuario fromDTO(UsuarioDTO objDTO) {
+		
+		return new Usuario(objDTO.getId(), objDTO.getNome(), objDTO.getEmail());
 	}
 }
