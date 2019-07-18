@@ -23,8 +23,6 @@ public class Instanciacao implements CommandLineRunner {
 	@Autowired
 	private PostagemRepositorio postagemRepositorio;
 	
-	
-	
 	@Override
 	public void run(String... args) throws Exception {
 		
