@@ -1,8 +1,11 @@
 package com.gabrielperuchi.workshopmongo.domain;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection = "usuario") // Referencia este obejto a uma coleção do mongoDB
@@ -12,9 +15,11 @@ public class Usuario implements Serializable {
 
 	@Id // Referencia quem será o id
 	private String id;
-	
 	private String nome;
 	private String email;
+
+	@DBRef(lazy = true) // Não ira puxar as postagens quando eu chamar a coleção de usuários (Evitar tráfego desnecessário na rede)
+	private List<Postagem> postagens = new ArrayList<Postagem>();
 
 	public Usuario() {
 
@@ -48,6 +53,14 @@ public class Usuario implements Serializable {
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	public List<Postagem> getPostagens() {
+		return postagens;
+	}
+
+	public void setPostagens(List<Postagem> postagens) {
+		this.postagens = postagens;
 	}
 
 	@Override
