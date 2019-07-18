@@ -1,27 +1,31 @@
 package com.gabrielperuchi.workshopmongo.domain;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import com.gabrielperuchi.workshopmongo.dto.AutorDTO;
+import com.gabrielperuchi.workshopmongo.dto.ComentarioDTO;
 
 @Document(collection = "postagem")
-public class Postagem implements Serializable{
+public class Postagem implements Serializable {
 	private static final long serialVersionUID = 1L;
-	
+
 	@Id
 	private String id;
 	private Date data;
 	private String titulo;
 	private String corpo;
-	
+
 	private AutorDTO autor;
-	
+	private List<ComentarioDTO> comentarios = new ArrayList<ComentarioDTO>();
+
 	public Postagem() {
-		
+
 	}
 
 	public Postagem(String id, Date data, String titulo, String corpo, AutorDTO autor) {
@@ -71,6 +75,14 @@ public class Postagem implements Serializable{
 	public void setAutor(AutorDTO autor) {
 		this.autor = autor;
 	}
+	
+	public List<ComentarioDTO> getComentarios() {
+		return comentarios;
+	}
+
+	public void setComentarios(List<ComentarioDTO> comentarios) {
+		this.comentarios = comentarios;
+	}
 
 	@Override
 	public int hashCode() {
@@ -96,5 +108,5 @@ public class Postagem implements Serializable{
 			return false;
 		return true;
 	}
-	
+
 }
