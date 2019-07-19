@@ -1,5 +1,6 @@
 package com.gabrielperuchi.workshopmongo.services;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,4 +23,7 @@ public class PostagemServico {
 		return postagem.orElseThrow(() -> new ObjetoNaoEncontradoException("Objeto não encontrado"));
 	}
 	
+	public List<Postagem> buscaPorTitulo(String texto){
+		return repositorio.findByTituloContainingIgnoreCase(texto);
+	}
 }

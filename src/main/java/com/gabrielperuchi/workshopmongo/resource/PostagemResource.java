@@ -1,13 +1,17 @@
 package com.gabrielperuchi.workshopmongo.resource;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.gabrielperuchi.workshopmongo.domain.Postagem;
+import com.gabrielperuchi.workshopmongo.resource.util.URL;
 import com.gabrielperuchi.workshopmongo.services.PostagemServico;
 
 @RestController
@@ -26,4 +30,15 @@ public class PostagemResource {
 
 	}
 
+	@RequestMapping(value = "/procuraTitulo", method = RequestMethod.GET)
+	public ResponseEntity<List<Postagem>> buscaPorTitulo(@RequestParam(value = "texto", defaultValue = "") String texto) {
+
+		texto = URL.decodeParam(texto);
+		
+		List<Postagem> postagens = servico.buscaPorTitulo(texto);
+
+		return ResponseEntity.ok().body(postagens);
+
+	}
+	
 }
