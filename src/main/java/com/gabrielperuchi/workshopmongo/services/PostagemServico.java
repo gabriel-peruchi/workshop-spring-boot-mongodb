@@ -24,6 +24,6 @@ public class PostagemServico {
 	}
 	
 	public List<Postagem> buscaPorTitulo(String texto){
-		return repositorio.findByTituloContainingIgnoreCase(texto);
+		return repositorio.buscaPorTitulo(texto);
 	}
 }
