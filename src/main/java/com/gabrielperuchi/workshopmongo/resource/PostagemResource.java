@@ -1,5 +1,6 @@
 package com.gabrielperuchi.workshopmongo.resource;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +37,24 @@ public class PostagemResource {
 		texto = URL.decodeParam(texto);
 		
 		List<Postagem> postagens = servico.buscaPorTitulo(texto);
+
+		return ResponseEntity.ok().body(postagens);
+
+	}
+	
+	@RequestMapping(value = "/buscaPersonalizada", method = RequestMethod.GET)
+	public ResponseEntity<List<Postagem>> buscaPersonalizada(
+			@RequestParam(value = "texto", defaultValue = "") String texto, 
+			@RequestParam(value = "dataMin", defaultValue = "") String dataMin,
+			@RequestParam(value = "dataMax", defaultValue = "") String dataMax
+				){
+
+		texto = URL.decodeParam(texto);
+		
+		Date min = URL.convertData(dataMin, new Date(0L));
+		Date max = URL.convertData(dataMax, new Date());
+		
+		List<Postagem> postagens = servico.buscaPersonalizada(texto, min, max);
 
 		return ResponseEntity.ok().body(postagens);
 

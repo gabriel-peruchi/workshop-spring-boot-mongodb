@@ -1,5 +1,6 @@
 package com.gabrielperuchi.workshopmongo.repository;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.data.mongodb.repository.MongoRepository;
@@ -15,5 +16,8 @@ public interface PostagemRepositorio extends MongoRepository<Postagem, String> {
 	List<Postagem> buscaPorTitulo(String texto);
 	
 	List<Postagem> findByTituloContainingIgnoreCase(String texto);
+	
+	@Query("{ $and: [ {data: {$gte: ?1} }, { data: { $lte: ?2} }, { $or: [ { 'titulo': { $regex: ?0, $options: 'i' } }, { 'corpo': { $regex: ?0, $options: 'i' } }, { 'comentarios.texto': { $regex: ?0, $options: 'i' } } ] } ] }")
+	List<Postagem> buscaPersonaliada(String texto, Date dataMin, Date dataMax);
 	
 }
